@@ -31,9 +31,24 @@ Signature: hash of (header + payload + secret)
 4. Client makes requests -> sends JWT in request headers (usually Authorization: Bearer <token>)
 5. Server verifies JWT -> if valid, it gives access to protected resources
 
-## JWT Advantages and Disadvantages
-### Advantages
-- Stateless (server )
+## JWT Advantages 
+- Stateless (server doesn't need to store session info )
+- Compact (just a string, easy to send in headers)
+- Secure (if secret/private key is safe)
+
+## Important note
+- Don't store sensitive information (like passwords ) inside JWT.
+- JWTs can expire -> always set an expiry time (exp)
+- Use httpOnly cookies if possible (to prevent XSS attacks)
+
+## Read about Cookie-parser
+- [Cookie-Parser](cookie_parser.md)
+
+## Example Usage of JWT in MERN
+1. Install dependencies
+- npm install jsonwebtoken
+
+2. 
 
 
 
