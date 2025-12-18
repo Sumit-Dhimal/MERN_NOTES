@@ -112,9 +112,9 @@ app.use(passport.initialize());
 
 ```js
 router.get(
-  "/google",
+  "/google", // this route triggers the Google OAuth flow.
   passport.authenticate("google", {
-    scope: ["profile", "email"],
+    scope: ["profile", "email"], // tells Google that you want access to the user’s basic profile and email address.
   })
 );
 ```
@@ -125,14 +125,14 @@ router.get(
 import generateToken from "../utils/generateToken.js";
 
 router.get(
-  "/google/callback",
+  "/google/callback", // is where Google redirects the user after they login.
   passport.authenticate("google", {
-    session: false,
-    failureRedirect: "/login",
+    session: false, // You’re not using Passport sessions; instead, you rely on JWT (generateToken).
+    failureRedirect: "/login", // If OAuth fails, the user is redirected to /login.
   }),
   (req, res) => {
-    generateToken(res, req.user._id);
-    res.redirect("http://localhost:3000");
+    generateToken(res, req.user._id); //Presumably sets a JWT cookie or header for the user.
+    res.redirect("http://localhost:3000"); // Sends the user back to your frontend.
   }
 );
 ```
