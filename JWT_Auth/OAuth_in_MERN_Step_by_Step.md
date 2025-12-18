@@ -190,13 +190,40 @@ OAuth and normal users are treated identically after login.
 ## STEP 9: User Model Example
 
 ```js
-const userSchema = new mongoose.Schema({
-  name: String,
-  email: String,
-  password: String, // optional for OAuth users
-  googleId: String,
-  isOAuthUser: Boolean,
-});
+const userSchema = mongoose.Schema({
+    username: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+        lowecase: true,
+    },
+    password: {
+        type: String,
+        select: false, // never return password by default
+        // minlength: 6
+        //required: true oauth doesn't need password
+    },
+    googleId: {
+        type: String,
+        unique: true,
+        sparse: true, // allows null but keeps uniqueness
+    },
+    avatar: {
+        type: String
+    },
+    authProvider: {
+        type: String,
+        enum: ["local", "google"],
+        default: "local",
+    }
+}, {
+    timestamps: true
+})
 ```
 
 ---
